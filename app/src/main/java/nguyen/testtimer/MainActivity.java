@@ -27,7 +27,6 @@ public class MainActivity extends Activity {
 
     private SharedPreferences savedValues;
 
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +35,7 @@ public class MainActivity extends Activity {
         timeTV = (TextView) findViewById(R.id.timeTV);
         downloadTV = (TextView) findViewById(R.id.downloadTV);
 
-
-
         savedValues = getSharedPreferences("savedValues", MODE_PRIVATE);
-
         savedValues.edit().clear().commit();
 
         startTimer();
@@ -98,7 +94,6 @@ public class MainActivity extends Activity {
 
     private void updateView(final long elapsedMillis, final int downloadCount) {
         // UI changes need to be run on the UI thread
-
         timeTV.post(new Runnable() {
 
             int elapsedSeconds = (int) elapsedMillis/1000;
