@@ -36,9 +36,13 @@ public class MainActivity extends Activity {
         timeTV = (TextView) findViewById(R.id.timeTV);
         downloadTV = (TextView) findViewById(R.id.downloadTV);
 
+
+
         savedValues = getSharedPreferences("savedValues", MODE_PRIVATE);
 
         savedValues.edit().clear().commit();
+
+        startTimer();
     }
 
     @Override
