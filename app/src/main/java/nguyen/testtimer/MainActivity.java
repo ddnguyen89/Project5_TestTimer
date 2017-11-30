@@ -21,7 +21,6 @@ public class MainActivity extends Activity {
     private TextView downloadTV;
 
     private Timer timer;
-    private Timer timer2;
     private long startMillis;
     private long elapsedMillis;
     private int downloadCount;
@@ -52,6 +51,7 @@ public class MainActivity extends Activity {
 
         edit.putLong("startMillis", startMillis);
         edit.putLong("elapsedMillis", elapsedMillis);
+
         edit.commit();
     }
 
@@ -75,26 +75,26 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 elapsedMillis = System.currentTimeMillis() - startMillis;
+
+                if(((int)elapsedMillis/1000)%10 == 1){
+                    if(((int)elapsedMillis/1000) == 1) {
+                        downloadCount = 0;
+                    } else {
+                        downloadFile();
+                        downloadCount++;
+                    }
+                }
                 updateView(elapsedMillis, downloadCount);
             }
         };
+
         timer.schedule(task, 0, 1000);
 
-        timer2 = new Timer(true);
-        TimerTask task2 = new TimerTask() {
-
-            @Override
-            public void run() {
-                downloadFile();
-                downloadCount += 1;
-                updateView(elapsedMillis, downloadCount);
-            }
-        };
-        timer2.schedule(task2, 10000, 10000);
     }
 
     private void updateView(final long elapsedMillis, final int downloadCount) {
         // UI changes need to be run on the UI thread
+
         timeTV.post(new Runnable() {
 
             int elapsedSeconds = (int) elapsedMillis/1000;
@@ -110,7 +110,6 @@ public class MainActivity extends Activity {
     private void stopTimer() {
         if (timer != null) {
             timer.cancel();
-            timer2.cancel();
         }
     }
 
